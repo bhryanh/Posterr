@@ -52,3 +52,30 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+.vs/
+
+# React
+node_modules/
+dist/
+build/
+.env.local
+
+# Database
+*.db
+*.db-shm
+*.db-wal
+
+# Docker
+.docker/
+
+# IDE
+.vscode/
+.idea/
+*.swp
