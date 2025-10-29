@@ -15,4 +15,27 @@ public class Post
     public virtual User Author { get; private set; }
     public virtual Post? OriginalPost { get; private set; }
     public virtual ICollection<Post> Reposts { get; private set; }
+
+    public Post(string content, User author)
+    {
+        Id = Guid.NewGuid();
+        Content = content ?? throw new ArgumentNullException(nameof(content));
+        Author = author ?? throw new ArgumentNullException(nameof(author));
+        AuthorId = author.Id;
+        CreatedAt = DateTime.UtcNow;
+        IsRepost = false;
+        OriginalPostId = null;
+        Reposts = new List<Post>();
+
+        Validate();
+    }
+    
+    private void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(Content))
+            throw new ArgumentException("Post content cannot be empty", nameof(Content));
+        
+        if (Content.Length > 777)
+            throw new ArgumentException("Post content cannot exceed 777 characters", nameof(Content));
+    }
 }
