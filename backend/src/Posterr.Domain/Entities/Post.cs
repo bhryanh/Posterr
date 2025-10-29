@@ -16,6 +16,11 @@ public class Post
     public virtual Post? OriginalPost { get; private set; }
     public virtual ICollection<Post> Reposts { get; private set; }
 
+    private Post() 
+    {
+        Reposts = new List<Post>();
+    }
+
     public Post(string content, User author)
     {
         Id = Guid.NewGuid();
