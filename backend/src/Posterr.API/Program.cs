@@ -1,5 +1,12 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Posterr.Application.Interfaces;
+using Posterr.Application.Services;
+using Posterr.Application.Validators;
+using Posterr.Domain.Interface;
+using Posterr.Domain.Interfaces;
 using Posterr.Infrastructure.Data;
+using Posterr.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +14,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<PosterrDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPostRepository, PostRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPostService, PostService>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreatePostDtoValidator>();
 
 var app = builder.Build();
 
